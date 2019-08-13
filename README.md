@@ -6,7 +6,7 @@ A Clojure library for liberator to load and transform events to HAL resources.
 This library uses [Halboy](https://github.com/jimmythompson/halboy) for creating and rendering HAL resources.
 
 ```clj
-[b-social/liberator-hal-events-resource "0.0.4"]
+[b-social/liberator-hal-events-resource "0.0.5"]
 ```
 
 ## Usage
