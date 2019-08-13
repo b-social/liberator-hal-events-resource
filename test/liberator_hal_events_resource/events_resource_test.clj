@@ -116,6 +116,36 @@
                         (map #(:id (hal/get-property % :event))))]
         (is (= [third-event-id] event-ids))))))
 
+(deftest events-resource-GET-on-order-specified
+  (let [routes [["/events" :events]]
+        first-event-id (data/random-uuid)
+        second-event-id (data/random-uuid)
+        third-event-id (data/random-uuid)
+        event-1 (data/make-random-event {:id first-event-id})
+        event-2 (data/make-random-event {:id second-event-id})
+        event-3 (data/make-random-event {:id third-event-id})
+        events-resource (params/wrap-params
+                          (build-events-resource
+                            {:routes routes}
+                            "10"
+                            (stubs/stub-events-loader [event-1
+                                                       event-2
+                                                       event-3])
+                            events/event->resource))
+        first-result (stubs/call-resource
+                       events-resource
+                       (ring/request :get "/events" {:order "DESC"}))
+
+        resource (halboy.json/map->resource (:body first-result))
+        page (hal/get-resource resource :events)]
+
+    (testing "returns ids to those events"
+      (is (= [third-event-id second-event-id first-event-id]
+            (->>
+              page
+              (map #(hal/get-property % :event))
+              (map :id)))))))
+
 (deftest events-resource-GET-on-last-page
   (let [routes [["/events" :events]]
         first-event-id (data/random-uuid)

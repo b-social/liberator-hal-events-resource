@@ -42,9 +42,9 @@
        :pick  page-size})))
 
 (defn build-events-resource [dependencies
-                       default-page-size
-                       events-loader-fn
-                       events-transformer-fn]
+                             default-page-size
+                             events-loader-fn
+                             events-transformer-fn]
   (let [routes (:routes dependencies)]
     (build-resource
       (with-json-mixin dependencies)
@@ -52,18 +52,19 @@
       (with-hypermedia-mixin dependencies)
       (with-hal-mixin dependencies)
       (with-unauthorised-handling)
+
       {:allowed-methods
        [:get]
        :handle-ok
        (fn [{:keys [request]}]
          (let [since (get-in request [:params "since"] nil)
-               
+               order (.toUpperCase (get-in request [:params "order"] "ASC"))
                page-size (Integer/parseInt
                            (get-in request [:params "pick"]
                              default-page-size))]
            (let [[events event-resources event-links]
                  (load-and-transform-events
-                   #(events-loader-fn since page-size)
+                   #(events-loader-fn since page-size order)
                    #(events-transformer-fn request routes %))]
              (->
                (hal/new-resource)

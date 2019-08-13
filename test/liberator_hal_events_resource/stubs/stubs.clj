@@ -7,8 +7,11 @@
     ))
 
 (defn stub-events-loader [events]
-  (fn [since pick]
-    (let [index (.indexOf (map :id events) since)]
+  (fn [since pick order]
+    (let [index (.indexOf (map :id events) since)
+          events (if (= order "DESC")
+                   (reverse events)
+                   events)]
       (if (< 0 index)
         (subvec events (inc index) (+ index pick))
         (take pick events)))))
