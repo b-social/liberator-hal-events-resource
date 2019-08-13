@@ -1,5 +1,4 @@
 (ns liberator-hal-events-resource.events-resource
-
   (:require [liberator-mixin.core :refer [build-resource]]
             [liberator-mixin.json.core :refer [with-json-mixin]]
             [liberator-mixin.validation.core :refer [with-validation-mixin]]
@@ -41,9 +40,12 @@
       {:since since
        :pick  page-size})))
 
+(defprotocol EventsLoader
+  (load-events [this parameters]))
+
 (defn build-events-resource [dependencies
                              default-page-size
-                             events-loader-fn
+                             events-loader
                              events-transformer-fn]
   (let [routes (:routes dependencies)]
     (build-resource
@@ -64,7 +66,8 @@
                              default-page-size))]
            (let [[events event-resources event-links]
                  (load-and-transform-events
-                   #(events-loader-fn since page-size order)
+                   #(load-events events-loader
+                      {:since since :pick page-size :order order})
                    #(events-transformer-fn request routes %))]
              (->
                (hal/new-resource)

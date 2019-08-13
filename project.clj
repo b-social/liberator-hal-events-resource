@@ -10,9 +10,11 @@
                  [clj-time "0.15.1"]
                  [bidi "2.1.4"]
                  [faker "0.3.2"]
+                 [lein-codox "0.10.7"]
                  [b-social/liberator-mixin "0.0.11"]]
   :plugins [[lein-cloverage "1.0.13"]
             [lein-shell "0.5.0"]
+            [lein-codox "0.10.7"]
             [lein-ancient "0.6.15"]
             [lein-changelog "0.3.2"]]
   :profiles {:shared {:dependencies [[org.clojure/clojure "1.10.0"]
@@ -21,6 +23,11 @@
              :dev    [:shared]
              :test   [:shared]}
   :eftest {:multithread? false}
+  :codox
+  {:namespaces  [#"^liberator-hal-events-resource\."]
+   :output-path "docs"
+   :doc-paths   ["docs"]
+   :source-uri  "https://github.com/b-social/liberator-hal-events-resource/blob/{version}/{filepath}#L{line}"}
   :deploy-repositories {"releases" {:url   "https://repo.clojars.org"
                                     :creds :gpg}}
   :aliases {"update-readme-version" ["shell" "sed" "-i" "s/\\\\[b-social\\\\/liberator-hal-events-resource \"[0-9.]*\"\\\\]/[b-social\\\\/liberator-hal-events-resource \"${:version}\"]/" "README.md"]
@@ -28,6 +35,7 @@
   :release-tasks [["shell" "git" "diff" "--exit-code"]
                   ["change" "version" "leiningen.release/bump-version"]
                   ["change" "version" "leiningen.release/bump-version" "release"]
+                  ["codox"]
                   ["changelog" "release"]
                   ["update-readme-version"]
                   ["vcs" "commit"]

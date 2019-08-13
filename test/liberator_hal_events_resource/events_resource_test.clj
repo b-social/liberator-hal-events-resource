@@ -17,7 +17,7 @@
         event-2 (data/make-random-event)
         events-resource (build-events-resource
                           {:routes routes} "10"
-                          (stubs/stub-events-loader [event-1 event-2])
+                          (stubs/->StubEventsLoader [event-1 event-2])
                           events/event->resource)
         result (stubs/call-resource
                  events-resource
@@ -33,7 +33,7 @@
   (let [routes [["/events" :events]]
         events-resource (build-events-resource
                           {:routes routes} "10"
-                          (stubs/stub-events-loader [])
+                          (stubs/->StubEventsLoader [])
                           events/event->resource)
         result (stubs/call-resource
                  events-resource
@@ -55,7 +55,7 @@
         event-3 (data/make-random-event {:id third-event-id})
         events-resource (build-events-resource
                           {:routes routes} "10"
-                          (stubs/stub-events-loader [event-1
+                          (stubs/->StubEventsLoader [event-1
                                                      event-2
                                                      event-3])
                           events/event->resource)
@@ -81,7 +81,7 @@
         events-resource (params/wrap-params
                           (build-events-resource
                             {:routes routes} "10"
-                            (stubs/stub-events-loader [event-1
+                            (stubs/->StubEventsLoader [event-1
                                                        event-2
                                                        event-3])
                             events/event->resource))
@@ -128,7 +128,7 @@
                           (build-events-resource
                             {:routes routes}
                             "10"
-                            (stubs/stub-events-loader [event-1
+                            (stubs/->StubEventsLoader [event-1
                                                        event-2
                                                        event-3])
                             events/event->resource))
@@ -153,7 +153,7 @@
         events-resource (params/wrap-params
                           (build-events-resource
                             {:routes routes} "10"
-                            (stubs/stub-events-loader [event-1])
+                            (stubs/->StubEventsLoader [event-1])
                             events/event->resource))
         page-size 1
 

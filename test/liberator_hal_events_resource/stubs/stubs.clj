@@ -1,13 +1,15 @@
 (ns liberator-hal-events-resource.stubs.stubs
-  (:require [liberator-mixin.json.core :as json]))
+  (:require [liberator-mixin.json.core :as json]
+            [liberator-hal-events-resource.events-resource
+             :refer [EventsLoader]]))
 
 (defn call-resource [resource request]
   (-> (resource request)
-    (update :body json/wire-json->map)
-    ))
+    (update :body json/wire-json->map)))
 
-(defn stub-events-loader [events]
-  (fn [since pick order]
+(defrecord StubEventsLoader [events]
+  EventsLoader
+  (load-events [_ {:keys [since order pick]}]
     (let [index (.indexOf (map :id events) since)
           events (if (= order "DESC")
                    (reverse events)
