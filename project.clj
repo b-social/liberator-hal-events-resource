@@ -1,4 +1,4 @@
-(defproject b-social/liberator-hal-events-resource "0.0.9"
+(defproject b-social/liberator-hal-events-resource "0.0.10"
   :description "FIXME: write description"
   :url "https://github.com/b-social/liberator-hal-events-resource"
   :license {:name "Eclipse Public License"
