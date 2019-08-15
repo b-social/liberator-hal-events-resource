@@ -1,4 +1,4 @@
-(defproject b-social/liberator-hal-events-resource "0.0.5"
+(defproject b-social/liberator-hal-events-resource "0.0.9"
   :description "FIXME: write description"
   :url "https://github.com/b-social/liberator-hal-events-resource"
   :license {:name "Eclipse Public License"
@@ -30,7 +30,7 @@
    :source-uri  "https://github.com/b-social/liberator-hal-events-resource/blob/{version}/{filepath}#L{line}"}
   :deploy-repositories {"releases" {:url   "https://repo.clojars.org"
                                     :creds :gpg}}
-  :aliases {"update-readme-version" ["shell" "sed" "-i" "s/\\\\[b-social\\\\/liberator-hal-events-resource \"[0-9.]*\"\\\\]/[b-social\\\\/liberator-hal-events-resource \"${:version}\"]/" "README.md"]
+  :aliases {"update-readme-version" ["shell" "sed" "-i" ".original" "s/\\\\[b-social\\\\/liberator-hal-events-resource \"[0-9.]*\"\\\\]/[b-social\\\\/liberator-hal-events-resource \"${:version}\"]/" "README.md"]
             "test"                  ["eftest" ":all"]}
   :release-tasks [["shell" "git" "diff" "--exit-code"]
                   ["change" "version" "leiningen.release/bump-version"]
@@ -39,6 +39,5 @@
                   ["changelog" "release"]
                   ["update-readme-version"]
                   ["vcs" "commit"]
-                  ["vcs" "tag"]
                   ["deploy"]
                   ["vcs" "push"]])
