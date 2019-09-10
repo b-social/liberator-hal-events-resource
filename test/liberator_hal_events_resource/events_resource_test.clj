@@ -1,15 +1,20 @@
 (ns liberator-hal-events-resource.events-resource-test
-  (:require [clojure.test :refer :all]
-            [liberator-hal-events-resource.events-resource :refer :all]
-            [ring.mock.request :as ring]
-            [org.bovinegenius.exploding-fish :refer [absolute?]]
-            [halboy.resource :as hal]
-            [ring.middleware.params :as params]
-            [clojure.string :refer [ends-with?]]
-            [liberator-hal-events-resource.stubs.data :as data]
-            [liberator-hal-events-resource.events :as events]
-            [liberator-hal-events-resource.stubs.stubs :as stubs]
-            ))
+  (:require
+    [clojure.test :refer :all]
+    [clojure.string :refer [ends-with?]]
+
+    [halboy.resource :as hal]
+    [halboy.json :as haljson]
+
+    [ring.mock.request :as ring]
+    [ring.middleware.params :as params]
+
+    [org.bovinegenius.exploding-fish :refer [absolute?]]
+
+    [liberator-hal-events-resource.events :as events]
+    [liberator-hal-events-resource.events-resource :refer :all]
+    [liberator-hal-events-resource.stubs.data :as data]
+    [liberator-hal-events-resource.stubs.stubs :as stubs]))
 
 (deftest events-resource-GET-on-success
   (let [routes [["/events" :events]]
@@ -22,7 +27,7 @@
         result (stubs/call-resource
                  events-resource
                  (ring/request :get "/events"))
-        resource (halboy.json/map->resource (:body result))]
+        resource (haljson/map->resource (:body result))]
 
     (testing "transform the event correctly"
       (is (= [(:id event-1) (:id event-2)]
@@ -38,7 +43,7 @@
         result (stubs/call-resource
                  events-resource
                  (ring/request :get "/events"))
-        resource (halboy.json/map->resource (:body result))]
+        resource (haljson/map->resource (:body result))]
     (testing "the list of event links is empty"
       (is (= [] (hal/get-link resource :events))))
 
@@ -62,7 +67,7 @@
         result (stubs/call-resource
                  events-resource
                  (ring/request :get "/events"))
-        resource (halboy.json/map->resource (:body result))
+        resource (haljson/map->resource (:body result))
         events (hal/get-resource resource :events)]
 
     (testing "returns links to those events"
@@ -89,7 +94,7 @@
         first-result (stubs/call-resource
                        events-resource
                        (ring/request :get "/events" {:pick page-size}))
-        first-resource (halboy.json/map->resource (:body first-result))
+        first-resource (haljson/map->resource (:body first-result))
         first-page (hal/get-resource first-resource :events)
 
         query-params (-> first-resource
@@ -99,14 +104,13 @@
         second-result (stubs/call-resource
                         events-resource
                         (ring/request :get "/events" query-params))
-        second-page (halboy.json/map->resource (:body second-result))]
+        second-page (haljson/map->resource (:body second-result))]
     (testing "returns ids to those events"
       (is (= [first-event-id second-event-id]
             (->>
               first-page
               (map #(hal/get-property % :event))
               (map :id)))))
-
 
     (testing "provides a next link which goes to the next page"
       (let [event-resources (->
@@ -136,7 +140,7 @@
                        events-resource
                        (ring/request :get "/events" {:order "DESC"}))
 
-        resource (halboy.json/map->resource (:body first-result))
+        resource (haljson/map->resource (:body first-result))
         page (hal/get-resource resource :events)]
 
     (testing "returns ids to those events"
@@ -160,7 +164,7 @@
         first-result (stubs/call-resource
                        events-resource
                        (ring/request :get "/events" {:pick page-size}))
-        first-resource (halboy.json/map->resource (:body first-result))]
+        first-resource (haljson/map->resource (:body first-result))]
     (testing "the next link points to the same page"
       (is (= (get-in (hal/get-link first-resource :next) [:query :since])
             first-event-id)))))

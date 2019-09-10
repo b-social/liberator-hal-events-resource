@@ -1,11 +1,16 @@
 (ns liberator-hal-events-resource.stubs.stubs
-  (:require [liberator-mixin.json.core :as json]
-            [liberator-hal-events-resource.events-resource
-             :refer [EventsLoader]]))
+  (:require
+    [jason.core :refer [defcoders]]
+
+    [liberator-hal-events-resource.events-resource
+     :refer [EventsLoader]]))
+
+(declare <-wire-json)
+(defcoders wire)
 
 (defn call-resource [resource request]
   (-> (resource request)
-    (update :body json/wire-json->map)))
+    (update :body <-wire-json)))
 
 (defrecord StubEventsLoader [events]
   EventsLoader

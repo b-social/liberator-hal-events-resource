@@ -1,43 +1,70 @@
 (defproject b-social/liberator-hal-events-resource "0.0.10"
-  :description "FIXME: write description"
+  :description "A HAL events resource for liberator."
   :url "https://github.com/b-social/liberator-hal-events-resource"
-  :license {:name "Eclipse Public License"
-            :url  "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[cheshire "5.8.1"]
-                 [liberator "0.15.2"]
-                 [halboy "4.0.1"]
-                 [camel-snake-kebab "0.4.0"]
-                 [clj-time "0.15.1"]
-                 [bidi "2.1.4"]
-                 [faker "0.3.2"]
-                 [lein-codox "0.10.7"]
-                 [b-social/liberator-mixin "0.0.11"]]
+
+  :license {:name "The MIT License"
+            :url  "https://opensource.org/licenses/MIT"}
+
+  :dependencies [[halboy "5.1.0"]
+                 [b-social/liberator-mixin "0.0.19"]
+                 [b-social/jason "0.1.2"]
+                 [b-social/hype "0.0.17"]]
+
   :plugins [[lein-cloverage "1.0.13"]
             [lein-shell "0.5.0"]
-            [lein-codox "0.10.7"]
             [lein-ancient "0.6.15"]
-            [lein-changelog "0.3.2"]]
-  :profiles {:shared {:dependencies [[org.clojure/clojure "1.10.0"]
-                                     [ring/ring-mock "0.3.2"]
-                                     [eftest "0.5.3"]]}
-             :dev    [:shared]
-             :test   [:shared]}
-  :eftest {:multithread? false}
+            [lein-changelog "0.3.2"]
+            [lein-eftest "0.5.8"]
+            [lein-codox "0.10.7"]
+            [lein-cljfmt "0.6.4"]
+            [lein-kibit "0.1.6"]
+            [lein-bikeshed "0.5.1"]]
+
+  :profiles {:shared {:dependencies
+                      [[org.clojure/clojure "1.10.0"]
+                       [ring/ring-mock "0.4.0"]
+                       [clj-time "0.15.1"]
+                       [faker "0.3.2"]
+                       [eftest "0.5.8"]]}
+             :dev    [:shared {:source-paths ["dev"]
+                               :eftest       {:multithread? false}}]
+             :test   [:shared {:eftest {:multithread? false}}]}
+
+  :cloverage
+  {:ns-exclude-regex [#"^user"]}
+
   :codox
   {:namespaces  [#"^liberator-hal-events-resource\."]
    :output-path "docs"
    :doc-paths   ["docs"]
    :source-uri  "https://github.com/b-social/liberator-hal-events-resource/blob/{version}/{filepath}#L{line}"}
-  :deploy-repositories {"releases" {:url   "https://repo.clojars.org"
-                                    :creds :gpg}}
-  :aliases {"update-readme-version" ["shell" "sed" "-i" ".original" "s/\\\\[b-social\\\\/liberator-hal-events-resource \"[0-9.]*\"\\\\]/[b-social\\\\/liberator-hal-events-resource \"${:version}\"]/" "README.md"]
-            "test"                  ["eftest" ":all"]}
-  :release-tasks [["shell" "git" "diff" "--exit-code"]
-                  ["change" "version" "leiningen.release/bump-version"]
-                  ["change" "version" "leiningen.release/bump-version" "release"]
-                  ["codox"]
-                  ["changelog" "release"]
-                  ["update-readme-version"]
-                  ["vcs" "commit"]
-                  ["deploy"]
-                  ["vcs" "push"]])
+
+  :cljfmt {:indents ^:replace {#".*" [[:inner 0]]}}
+
+  :deploy-repositories
+  {"releases" {:url "https://repo.clojars.org" :creds :gpg}}
+
+  :release-tasks
+  [["shell" "git" "diff" "--exit-code"]
+   ["change" "version" "leiningen.release/bump-version" "release"]
+   ["codox"]
+   ["changelog" "release"]
+   ["shell" "sed" "-E" "-i" "" "s/\"[0-9]+\\.[0-9]+\\.[0-9]+\"/\"${:version}\"/g" "README.md"]
+   ["shell" "git" "add" "."]
+   ["vcs" "commit"]
+   ["vcs" "tag"]
+   ["deploy"]
+   ["change" "version" "leiningen.release/bump-version"]
+   ["vcs" "commit"]
+   ["vcs" "tag"]
+   ["vcs" "push"]]
+
+  :aliases {"test"      ["with-profile" "test" "eftest" ":all"]
+            "precommit" ["do"
+                         ["check"]
+                         ["kibit" "--replace"]
+                         ["cljfmt" "fix"]
+                         ["with-profile" "test" "bikeshed"
+                          "--name-collisions" "false"
+                          "--verbose" "true"]
+                         ["test"]]})
