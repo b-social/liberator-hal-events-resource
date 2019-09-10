@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.0.11] — 2019-09-11
+
 ## [0.0.10] — 2019-08-15
 
 ## [0.0.5] — 2019-08-13
@@ -35,4 +37,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.0.4]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.3...0.0.4
 [0.0.5]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.4...0.0.5
 [0.0.10]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.5...0.0.10
-[Unreleased]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.10...HEAD
+[0.0.11]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.10...0.0.11
+[Unreleased]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.11...HEAD
