@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+### Changed
+- Use latest version of liberator-mixin. Expect params to be pre-parsed.
 
 ## [0.0.11] — 2019-09-11
 
@@ -21,14 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.0.2] — 2019-08-13
 
 ## [0.0.1] — 2019-08-13
-### Added
-- _CHANGELOG.md_ created.
-### Changed
-- Something has been changed.
-### Fixed
-- Something has been fixed.
-### Removed
-- Something has been removed.
+- Initial release.
 
 
 [0.0.1]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.0...0.0.1

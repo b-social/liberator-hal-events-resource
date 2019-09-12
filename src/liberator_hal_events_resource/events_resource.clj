@@ -61,11 +61,9 @@
        [:get]
        :handle-ok
        (fn [{:keys [request]}]
-         (let [since (get-in request [:params "since"] nil)
-               order (.toUpperCase (get-in request [:params "order"] "ASC"))
-               page-size (Integer/parseInt
-                           (get-in request [:params "pick"]
-                             default-page-size))]
+         (let [since (get-in request [:params :since] nil)
+               order (.toUpperCase (get-in request [:params :order] "ASC"))
+               page-size (get-in request [:params :pick] default-page-size)]
            (let [[events event-resources event-links]
                  (load-and-transform-events
                    #(load-events events-loader

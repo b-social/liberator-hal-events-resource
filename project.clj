@@ -6,7 +6,7 @@
             :url  "https://opensource.org/licenses/MIT"}
 
   :dependencies [[halboy "5.1.0"]
-                 [b-social/liberator-mixin "0.0.19"]
+                 [b-social/liberator-mixin "0.0.25"]
                  [b-social/jason "0.1.2"]
                  [b-social/hype "0.0.17"]]
 

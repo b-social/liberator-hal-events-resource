@@ -8,6 +8,7 @@
 
     [ring.mock.request :as ring]
     [ring.middleware.params :as params]
+    [ring.middleware.keyword-params :as keyword-params]
 
     [org.bovinegenius.exploding-fish :refer [absolute?]]
 
@@ -20,10 +21,12 @@
   (let [routes [["/events" :events]]
         event-1 (data/make-random-event)
         event-2 (data/make-random-event)
-        events-resource (build-events-resource
-                          {:routes routes} "10"
-                          (stubs/->StubEventsLoader [event-1 event-2])
-                          events/event->resource)
+        events-resource (-> (build-events-resource
+                              {:routes routes} 10
+                              (stubs/->StubEventsLoader [event-1 event-2])
+                              events/event->resource)
+                          (keyword-params/wrap-keyword-params)
+                          (params/wrap-params))
         result (stubs/call-resource
                  events-resource
                  (ring/request :get "/events"))
@@ -36,10 +39,12 @@
 
 (deftest events-resource-GET-on-no-events-found
   (let [routes [["/events" :events]]
-        events-resource (build-events-resource
-                          {:routes routes} "10"
-                          (stubs/->StubEventsLoader [])
-                          events/event->resource)
+        events-resource (-> (build-events-resource
+                              {:routes routes} 10
+                              (stubs/->StubEventsLoader [])
+                              events/event->resource)
+                          (keyword-params/wrap-keyword-params)
+                          (params/wrap-params))
         result (stubs/call-resource
                  events-resource
                  (ring/request :get "/events"))
@@ -58,12 +63,14 @@
         event-1 (data/make-random-event {:id first-event-id})
         event-2 (data/make-random-event {:id second-event-id})
         event-3 (data/make-random-event {:id third-event-id})
-        events-resource (build-events-resource
-                          {:routes routes} "10"
-                          (stubs/->StubEventsLoader [event-1
-                                                     event-2
-                                                     event-3])
-                          events/event->resource)
+        events-resource (-> (build-events-resource
+                              {:routes routes} 10
+                              (stubs/->StubEventsLoader [event-1
+                                                         event-2
+                                                         event-3])
+                              events/event->resource)
+                          (keyword-params/wrap-keyword-params)
+                          (params/wrap-params))
         result (stubs/call-resource
                  events-resource
                  (ring/request :get "/events"))
@@ -75,6 +82,7 @@
             (map #(-> %
                     (hal/get-property :event)
                     :id) events))))))
+
 (deftest events-resource-GET-on-page-size-specified
   (let [routes [["/events" :events]]
         first-event-id (data/random-uuid)
@@ -83,13 +91,14 @@
         event-1 (data/make-random-event {:id first-event-id})
         event-2 (data/make-random-event {:id second-event-id})
         event-3 (data/make-random-event {:id third-event-id})
-        events-resource (params/wrap-params
-                          (build-events-resource
-                            {:routes routes} "10"
-                            (stubs/->StubEventsLoader [event-1
-                                                       event-2
-                                                       event-3])
-                            events/event->resource))
+        events-resource (-> (build-events-resource
+                              {:routes routes} 10
+                              (stubs/->StubEventsLoader [event-1
+                                                         event-2
+                                                         event-3])
+                              events/event->resource)
+                          (keyword-params/wrap-keyword-params)
+                          (params/wrap-params))
         page-size 2
         first-result (stubs/call-resource
                        events-resource
@@ -128,14 +137,15 @@
         event-1 (data/make-random-event {:id first-event-id})
         event-2 (data/make-random-event {:id second-event-id})
         event-3 (data/make-random-event {:id third-event-id})
-        events-resource (params/wrap-params
-                          (build-events-resource
-                            {:routes routes}
-                            "10"
-                            (stubs/->StubEventsLoader [event-1
-                                                       event-2
-                                                       event-3])
-                            events/event->resource))
+        events-resource (-> (build-events-resource
+                              {:routes routes}
+                              10
+                              (stubs/->StubEventsLoader [event-1
+                                                         event-2
+                                                         event-3])
+                              events/event->resource)
+                          (keyword-params/wrap-keyword-params)
+                          (params/wrap-params))
         first-result (stubs/call-resource
                        events-resource
                        (ring/request :get "/events" {:order "DESC"}))
@@ -154,11 +164,12 @@
   (let [routes [["/events" :events]]
         first-event-id (data/random-uuid)
         event-1 (data/make-random-event {:id first-event-id})
-        events-resource (params/wrap-params
-                          (build-events-resource
-                            {:routes routes} "10"
-                            (stubs/->StubEventsLoader [event-1])
-                            events/event->resource))
+        events-resource (-> (build-events-resource
+                              {:routes routes} 10
+                              (stubs/->StubEventsLoader [event-1])
+                              events/event->resource)
+                          (keyword-params/wrap-keyword-params)
+                          (params/wrap-params))
         page-size 1
 
         first-result (stubs/call-resource
