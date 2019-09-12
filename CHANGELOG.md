@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+
+## [0.0.12] — 2019-09-12
 ### Changed
 - Use latest version of liberator-mixin. Expect params to be pre-parsed.
 
@@ -33,4 +35,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.0.5]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.4...0.0.5
 [0.0.10]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.5...0.0.10
 [0.0.11]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.10...0.0.11
-[Unreleased]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.11...HEAD
+[0.0.12]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.11...0.0.12
+[Unreleased]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.12...HEAD
