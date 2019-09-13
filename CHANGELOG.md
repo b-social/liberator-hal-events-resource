@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+
+## [0.0.13] — 2019-09-13
 ### Changed
 - Update Clojure test dependency to 1.10.1.
 
@@ -38,4 +40,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.0.10]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.5...0.0.10
 [0.0.11]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.10...0.0.11
 [0.0.12]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.11...0.0.12
-[Unreleased]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.12...HEAD
+[0.0.13]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.12...0.0.13
+[Unreleased]: https://github.com/b-social/liberator-hal-events-resource/compare/0.0.13...HEAD
