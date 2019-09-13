@@ -21,7 +21,7 @@
             [lein-bikeshed "0.5.1"]]
 
   :profiles {:shared {:dependencies
-                      [[org.clojure/clojure "1.10.0"]
+                      [[org.clojure/clojure "1.10.1"]
                        [ring/ring-mock "0.4.0"]
                        [clj-time "0.15.1"]
                        [faker "0.3.2"]

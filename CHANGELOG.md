@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+### Changed
+- Update Clojure test dependency to 1.10.1.
 
 ## [0.0.12] — 2019-09-12
 ### Changed
