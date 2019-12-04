@@ -1,4 +1,4 @@
-(defproject b-social/liberator-hal-events-resource "0.0.15-SNAPSHOT"
+(defproject b-social/liberator-hal-events-resource "0.0.15"
   :description "A HAL events resource for liberator."
   :url "https://github.com/b-social/liberator-hal-events-resource"
 
