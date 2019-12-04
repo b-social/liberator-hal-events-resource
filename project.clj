@@ -6,9 +6,9 @@
             :url  "https://opensource.org/licenses/MIT"}
 
   :dependencies [[halboy "5.1.0"]
-                 [b-social/liberator-mixin "0.0.31"]
-                 [b-social/jason "0.1.3"]
-                 [b-social/hype "0.0.17"]]
+                 [b-social/liberator-mixin "0.0.33"]
+                 [b-social/jason "0.1.4"]
+                 [b-social/hype "1.0.0"]]
 
   :plugins [[lein-cloverage "1.0.13"]
             [lein-shell "0.5.0"]
