@@ -68,7 +68,7 @@
                  (load-and-transform-events
                    #(load-events events-loader
                       {:since since :pick page-size :order order})
-                   #(events-transformer-fn request routes %))]
+                   #(events-transformer-fn dependencies request routes %))]
              (->
                (hal/new-resource)
                (hal/add-links
