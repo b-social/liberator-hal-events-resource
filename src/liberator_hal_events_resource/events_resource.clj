@@ -61,13 +61,16 @@
        [:get]
        :handle-ok
        (fn [{:keys [request]}]
-         (let [since (get-in request [:params :since] nil)
-               order (.toUpperCase (get-in request [:params :order] "ASC"))
-               page-size (get-in request [:params :pick] default-page-size)]
+         (let [params (:params request)
+               since (get params :since nil)
+               order (.toUpperCase (get params :order "ASC"))
+               page-size (get params :pick default-page-size)
+               additional-params (dissoc params :since :order :pick)]
            (let [[events event-resources event-links]
                  (load-and-transform-events
                    #(load-events events-loader
-                      {:since since :pick page-size :order order})
+                      {:since since :pick page-size :order order} 
+                      additional-params)
                    #(events-transformer-fn dependencies request routes %))]
              (->
                (hal/new-resource)
