@@ -1,12 +1,7 @@
 (ns liberator-hal-events-resource.stubs.data
   (:require
     [clj-time.core :as time]
-    [faker.lorem :as lorem])
-  (:import
-    [java.util UUID]))
-
-(defn random-uuid []
-  (str (UUID/randomUUID)))
+    [faker.lorem :as lorem]))
 
 (defn random-created-at []
   (time/now))

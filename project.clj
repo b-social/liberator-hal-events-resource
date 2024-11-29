@@ -6,26 +6,26 @@
             :url  "https://opensource.org/licenses/MIT"}
 
   :dependencies [[halboy "5.1.0"]
-                 [b-social/liberator-mixin "0.0.34"]
-                 [b-social/jason "0.1.4"]
+                 [b-social/liberator-mixin "0.0.57"]
+                 [b-social/jason "0.1.5"]
                  [b-social/hype "1.0.0"]]
 
-  :plugins [[lein-cloverage "1.0.13"]
+  :plugins [[lein-cloverage "1.2.3"]
             [lein-shell "0.5.0"]
-            [lein-ancient "0.6.15"]
+            [lein-ancient "0.7.0"]
             [lein-changelog "0.3.2"]
-            [lein-eftest "0.5.8"]
-            [lein-codox "0.10.7"]
+            [lein-eftest "0.5.9"]
+            [lein-codox "0.10.8"]
             [lein-cljfmt "0.6.4"]
-            [lein-kibit "0.1.6"]
-            [lein-bikeshed "0.5.1"]]
+            [lein-kibit "0.1.8"]
+            [lein-bikeshed "0.5.2"]]
 
   :profiles {:shared {:dependencies
-                      [[org.clojure/clojure "1.10.1"]
+                      [[org.clojure/clojure "1.11.1"]
                        [ring/ring-mock "0.4.0"]
-                       [clj-time "0.15.1"]
+                       [clj-time "0.15.2"]
                        [faker "0.3.2"]
-                       [eftest "0.5.8"]]}
+                       [eftest "0.5.9"]]}
              :dev    [:shared {:source-paths ["dev"]
                                :eftest       {:multithread? false}}]
              :test   [:shared {:eftest {:multithread? false}}]}
